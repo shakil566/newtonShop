@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Mechanics;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -48,9 +49,9 @@ class ProductController extends Controller
         ]);
         if ($validator->fails()) {
             return response()->json([
-                'status' => 422,
+                'status' => 400,
                 'message' => $validator->messages()
-            ], 422);
+            ], 400);
         } else {
             $product = new Product();
             $product->name = $request->name;
@@ -119,9 +120,9 @@ class ProductController extends Controller
             ]);
             if ($validator->fails()) {
                 return response()->json([
-                    'status' => 422,
+                    'status' => 400,
                     'message' => $validator->messages(),
-                ], 422);
+                ], 400);
             } else {
 
                 $product->name = $request->name;
@@ -164,5 +165,15 @@ class ProductController extends Controller
                 'message' => 'Product ' .$id. ' not found'
             ], 404);
         }
+    }
+
+    public function relation(Request $request){
+        // $data = Product::with('brand')->get();
+        // print_r($data->toArray());
+
+        $data = Mechanics::with('carOwnerData')->get();
+        echo'<pre/>';
+        print_r($data->toArray());
+
     }
 }

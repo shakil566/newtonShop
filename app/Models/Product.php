@@ -19,4 +19,9 @@ class Product extends Model
         'price',
     ];
     public $timestamps = true;
+
+
+    public function brand(){
+        return $this->belongsTo(Brand::class);
+    }
 }
